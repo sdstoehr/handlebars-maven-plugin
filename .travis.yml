@@ -1,0 +1,6 @@
+language: java
+jdk:
+- oraclejdk7
+script: "mvn verify -B"
+after_success:
+- mvn cobertura:cobertura coveralls:cobertura
