@@ -41,14 +41,16 @@ public class HandlebarsCompilerTest {
         templates.put("test.hbs", "abc");
 
         Assert.assertEquals("TEMPLATES = TEMPLATES || {};\n"
-          + "TEMPLATES['main'] = {\"compiler\":[6,\">= 2.0.0-beta.1\"],\"main\":function(depth0,helpers,partials,data) {\n"
+          + "(function (namespace, Handlebars) {\n"
+          + "namespace['main'] = Handlebars.template({\"compiler\":[6,\">= 2.0.0-beta.1\"],\"main\":function(depth0,helpers,partials,data) {\n"
           + "  var helper, functionType=\"function\", helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;\n"
           + "  return \"<p>\"\n"
           + "    + escapeExpression(((helper = (helper = helpers.main || (depth0 != null ? depth0.main : depth0)) != null ? helper : helperMissing),(typeof helper === functionType ? helper.call(depth0, {\"name\":\"main\",\"hash\":{},\"data\":data}) : helper)))\n"
           + "    + \"</p>\";\n"
-          + "},\"useData\":true};\n"
-          + "TEMPLATES['test'] = {\"compiler\":[6,\">= 2.0.0-beta.1\"],\"main\":function(depth0,helpers,partials,data) {\n"
+          + "},\"useData\":true});\n"
+          + "namespace['test'] = Handlebars.template({\"compiler\":[6,\">= 2.0.0-beta.1\"],\"main\":function(depth0,helpers,partials,data) {\n"
           + "  return \"abc\";\n"
-          + "  },\"useData\":true};\n", compiler.compileBatch(templates, "TEMPLATES"));
+          + "  },\"useData\":true});\n"
+          + "}(TEMPLATES, Handlebars));\n", compiler.compileBatch(templates, "TEMPLATES"));
     }
 }

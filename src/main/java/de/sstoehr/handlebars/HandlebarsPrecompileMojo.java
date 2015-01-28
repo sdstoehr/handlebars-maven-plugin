@@ -42,6 +42,10 @@ public class HandlebarsPrecompileMojo extends AbstractMojo {
     @Component
     private MavenProject project;
 
+    public HandlebarsPrecompileMojo() {
+        super();
+    }
+
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
         HandlebarsCompiler compiler = new HandlebarsCompiler();

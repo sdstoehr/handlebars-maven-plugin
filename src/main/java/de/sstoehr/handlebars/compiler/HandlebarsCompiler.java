@@ -34,12 +34,17 @@ public class HandlebarsCompiler {
 
         output.append(namespace).append(" = ").append(namespace).append(" || {};").append("\n");
 
+        output.append("(function (namespace, Handlebars) {\n");
+
         for (Map.Entry<String, String> template : templates.entrySet()) {
             String name = getCanonicalName(template.getKey());
             String compiled = this.compile(template.getValue());
 
-            output.append(namespace).append("['").append(name).append("']").append(" = ").append(compiled).append(";\n");
+            output.append("namespace['").append(name).append("']").append(" = ");
+            output.append("Handlebars.template(").append(compiled).append(");\n");
         }
+
+        output.append("}(").append(namespace).append(", Handlebars));\n");
 
         return output.toString();
     }
